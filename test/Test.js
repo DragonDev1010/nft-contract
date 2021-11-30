@@ -4,18 +4,18 @@ require('chai')
 
 const {assert} = require('chai')
 
-const Nft = artifacts.require('./Nft.sol')
+const StarSeas = artifacts.require('./StarSeasNft.sol')
 
-contract('Nft contract', (accounts) => {
-    let nft
+contract('StarSeas contract', (accounts) => {
+    let starSea
     let res
     before(async() => {
-        nft = await Nft.deployed()
+        starSea = await StarSeas.deployed()
     })
-    it('Test setTokenURI', async() => {
-        res = await nft.mint(accounts[0], 0);
-        await nft.setBaseURI("https://ipfs.io/ipfs/")
-        res = await nft.tokenURI.call(0)
-        console.log("Base Token URI: ", res)
+    it('contract constructor ', async() => {
+        res = await starSea.name()
+        assert.equal(res, 'StarSeas', 'nft name is correct')
+        res = await starSea.symbol()
+        assert.equal(res, 'SPC', 'nft symbol is correct')
     })
 })

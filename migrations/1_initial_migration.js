@@ -1,5 +1,5 @@
-const Nft = artifacts.require("Nft");
+const StarSeas = artifacts.require("StarSeasNft");
 
 module.exports = function (deployer) {
-  deployer.deploy(Nft, "Space NFT", "SPC");
+  deployer.deploy(StarSeas, "StarSeas", "SPC");
 };

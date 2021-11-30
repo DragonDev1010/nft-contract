@@ -42,11 +42,11 @@ module.exports = {
     // tab if you use this network and you must also set the `host`, `port` and `network_id`
     // options below to some value.
     //
-    // development: {
-    //  host: "127.0.0.1",     // Localhost (default: none)
-    //  port: 8545,            // Standard Ethereum port (default: none)
-    //  network_id: "*",       // Any network (default: none)
-    // },
+    development: {
+     host: "127.0.0.1",     // Localhost (default: none)
+     port: 8545,            // Standard Ethereum port (default: none)
+     network_id: "*",       // Any network (default: none)
+    },
     // Another network with more advanced options...
     // advanced: {
     // port: 8777,             // Custom port
@@ -81,6 +81,15 @@ module.exports = {
       network_id: 97, // BSC testnet
       skipDryRun: true
     },
+    rinkeby: {
+      networkCheckTimeout: 10000,
+      provider: () => new HDWalletProvider(
+        mnemonic, 
+        'https://rinkeby.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161'
+      ),
+      network_id: 4, // Rinkeby testnet
+      skipDryRun: true
+    }
   },
 
   // Set default mocha options here, use special reporters etc.
