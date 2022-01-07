@@ -1,5 +1,9 @@
 const StarSeasNFT = artifacts.require("StarSeasNFT")
+const accessControl = artifacts.require("StarSeasAccessControl")
 
-module.exports = function(deployer) {
-    deployer.deploy(StarSeasNFT, "StarSeas", "SGE")
+module.exports = async function(deployer) {
+    deployer.deploy(accessControl)
+        .then(async (starSeasAccess) => {
+            await deployer.deploy(StarSeasNFT, "StarSeas", "SGE", starSeasAccess.address)
+        })
 }

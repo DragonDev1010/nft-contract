@@ -27,4 +27,8 @@ contract('StarSeasNFT', (accounts) => {
         res = await starSeasNFT.tokenURI(2)
         console.log(res)
     })
+    it('Access Controller Test', async() => {
+        res = await starSeasNFT.accessControls.call()
+        console.log(res)
+    })
 })
