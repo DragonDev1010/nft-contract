@@ -45,4 +45,11 @@ contract StarSeasNFT is ERC721 {
     function isApproved(uint256 _tokenId, address _operator) public view returns (bool) {
         return isApprovedForAll(ownerOf(_tokenId), _operator) || getApproved(_tokenId) == _operator;
     }
+    function updateAccessControls(StarSeasAccessControl _accessControls) external {
+        require(accessControls.hasAdminRole(_msgSender()), "StarSeasNFT.updateAccessControls: Sender must be admin");
+        accessControls = _accessControls;
+    }
+    function exists(uint256 _tokenId) external view returns (bool) {
+        return _exists(_tokenId);
+    }
 }
