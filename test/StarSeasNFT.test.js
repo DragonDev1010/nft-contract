@@ -4,12 +4,12 @@ require('chai')
 
 const {assert} = require('chai')
 
-const StarSeasNft = artifacts.require('./NFT/StarSeasNFT.sol')
+const StarSeasNFT = artifacts.require('./NFT/StarSeasNFT.sol')
 const AccessControl = artifacts.require('./AccessControl/StarSeasAccessControl.sol')
 contract('StarSeasNFT', (accounts) => {
     let starSeasNFT, accessControl, res
     before(async() => {
-        starSeasNFT = await StarSeasNft.deployed()
+        starSeasNFT = await StarSeasNFT.deployed()
         accessControl = await AccessControl.deployed()
     })
     it('mint NFT', async() => {
@@ -45,7 +45,5 @@ contract('StarSeasNFT', (accounts) => {
     it('Is approved', async() => {
         res = await starSeasNFT.showOwners(0)
         console.log(res.toString())
-        // res = await starSeasNFT.isApproved(0, accounts[0])
-        // console.log(res)
     })
 })
