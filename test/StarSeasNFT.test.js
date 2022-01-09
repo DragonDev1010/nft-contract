@@ -15,9 +15,12 @@ contract('StarSeasNFT', (accounts) => {
     it('mint NFT', async() => {
         res = await starSeasNFT.mint("token 1")
         assert.equal(res.logs[0].args.to, accounts[0], 'To address is correct')
+        console.log(res.logs[0].args)
         res = await starSeasNFT.mint("token 2")
         assert.equal(res.logs[0].args.tokenId, 1, 'Token Id is correct')
-        await starSeasNFT.mint("token 3")
+        console.log(res.logs[0].args)
+        res = await starSeasNFT.mint("token 3")
+        console.log(res.logs[0].args)
     })
     it('set base uri', async() => {
         await starSeasNFT.setBaseURI('https://ipfs/')
@@ -38,5 +41,11 @@ contract('StarSeasNFT', (accounts) => {
         await starSeasNFT.burn(0)
         res = await starSeasNFT.tokenAmount()
         assert.equal(res, 2, 'Amount of NFT is correct after burnning')
+    })
+    it('Is approved', async() => {
+        res = await starSeasNFT.showOwners(0)
+        console.log(res.toString())
+        // res = await starSeasNFT.isApproved(0, accounts[0])
+        // console.log(res)
     })
 })

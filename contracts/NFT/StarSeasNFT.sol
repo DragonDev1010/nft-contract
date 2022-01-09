@@ -17,7 +17,13 @@ contract StarSeasNFT is ERC721 {
     constructor(string memory name, string memory symbol, StarSeasAccessControl accessControls_) ERC721(name, symbol){
         accessControls = accessControls_;
     }
-    function mint(string calldata _metaData) public returns(uint) {
+    function _baseURI() internal view virtual override returns (string memory) {
+        return baseTokenURI;
+    }
+    function setBaseURI(string memory baseURI) public {
+        baseTokenURI = baseURI;
+    }
+    function mint(string calldata _metaData) public returns(uint256) {
         uint256 tokenId;
         tokenId = tokenIdPointer;
         tokenIdPointer = tokenIdPointer.add(1);
@@ -25,12 +31,6 @@ contract StarSeasNFT is ERC721 {
         tokenHashList[tokenId] = _metaData;
         tokenAmount = tokenAmount.add(1);
         return tokenId;
-    }
-    function _baseURI() internal view virtual override returns (string memory) {
-        return baseTokenURI;
-    }
-    function setBaseURI(string memory baseURI) public {
-        baseTokenURI = baseURI;
     }
     function burn(uint256 _tokenId) public returns(bool) {
         address operator = _msgSender();
