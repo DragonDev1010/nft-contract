@@ -8,6 +8,7 @@ import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "@openzeppelin/contracts/utils/Context.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 contract Marketplace is Context {
+    using SafeMath for uint256;
     enum Currency {
         ETH, 
         SGE
@@ -22,6 +23,7 @@ contract Marketplace is Context {
     mapping(uint256 => Offer) public offers;
     IStarSeasNFT public StarSeasNFT;
     IERC20 public SGE;
+    uint256 feePlus = 108;
     event setSelling(uint256 indexed tokenId);
     event sellingCanceled( uint256 indexed tokenId );
     event boughtNFT(uint256 indexed tokenId);
@@ -48,11 +50,11 @@ contract Marketplace is Context {
         require(StarSeasNFT.ownerOf(tokenId_) != msg.sender, "Marketplace.buyingNFT: Owner of nft can not buy his own nft.");
         Offer storage offer = offers[tokenId_];
         if(offer.currency == Currency.SGE) {
-            require(SGE.allowance(_msgSender(), address(this)) >=  offer.salePrice, "Marketplace.confirmOffer: ERC20 token allowance is less than selling price.");
-            SGE.transferFrom(msg.sender, offer.seller, offer.salePrice);
+            require(SGE.allowance(_msgSender(), address(this)) >=  offer.salePrice.mul(feePlus).div(100), "Marketplace.confirmOffer: ERC20 token allowance is less than selling price.");
+            SGE.transferFrom(msg.sender, offer.seller, offer.salePrice.mul(feePlus).div(100));
         } else {
-            require(msg.value >= offer.salePrice, "Marketplace.buyingNFT: Buyer does not pay less than nft price." );
-            payable(offer.seller).transfer(offer.salePrice);
+            require(msg.value >= offer.salePrice.mul(feePlus).div(100), "Marketplace.buyingNFT: Buyer paid less than nft price." );
+            payable(offer.seller).transfer(offer.salePrice.mul(feePlus).div(100));
         }
         StarSeasNFT.safeTransferFrom(StarSeasNFT.ownerOf(tokenId_), msg.sender, tokenId_);
         offers[tokenId_].salePrice = 0;
