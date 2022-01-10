@@ -77,7 +77,7 @@ contract AuctionMarket is Context{
         require(StarSeasNFT.exists(tokenId_), "Auction.completeAuction: TokenID does not exist");
         require(auctions[tokenId_].auctionPrice > 0, "Auction.completeAuction: This auction does not exist");
         Auction storage auction = auctions[tokenId_];
-        require(block.timestamp > auction.endTime, "Auction.completeAuction: Now is not yet auction ending time.");
+        // require(block.timestamp > auction.endTime, "Auction.completeAuction: Now is not yet auction ending time.");
         require(highestBids[tokenId_].bidPrice > auction.auctionPrice, "Auction.completeAuction: Nobody bidded this auction.");
         HighestBid storage highestBid = highestBids[tokenId_];
         if(auction.currency == Currency.SGE) {
